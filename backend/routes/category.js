@@ -1,11 +1,16 @@
 const express = require("express")
 const router = express.Router()
 const Category = require("./../db/category");
-const { addCategory, updateCategory, deleteCategory } = require("../handlers/category-handler");
+const { addCategory, updateCategory, deleteCategory, getCategories } = require("../handlers/category-handler");
 
 router.post("", async(req, res)=>{
     let model = req.body;
     let result = await addCategory(model);
+    res.send(result);
+})
+
+router.get("", async(req, res)=>{
+    let result = await getCategories();
     res.send(result);
 })
 
