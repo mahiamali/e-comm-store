@@ -1,0 +1,9 @@
+.action-buttons {
+//   display: flex;
+  gap: 10px; // You can increase this if needed
+  white-space: nowrap;
+}
+
+.action-buttons button:first-child {
+  margin-right: 10px;
+}

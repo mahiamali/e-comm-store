@@ -1,0 +1,31 @@
+<header class="site-header">
+    <!-- Top Header -->
+    <div class="header-top">
+        <div class="logo">
+            <a href="/">ShopNow</a>
+        </div>
+
+        <div class="search-bar">
+            <input type="text" placeholder="Search products..." />
+        </div>
+
+        <div class="profile-link">
+            <a href="/profile">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path
+                        d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z" />
+                </svg>
+                <span>Profile</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- Category Menu -->
+    <nav class="category-nav">
+        <ul>
+            @for (category of categoryList; track $index) {
+            <li><a href="/category/{{category._id}}">{{category.name}}</a></li>
+            }
+        </ul>
+    </nav>
+</header>

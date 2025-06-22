@@ -1,0 +1,130 @@
+// ===== Variables =====
+$primary-color: #e91e63;
+$secondary-color: #16a085;
+$text-color: #ffffff;
+$text-light: #34495e;
+$border-color: #ccc;
+$input-bg: #fff;
+$header-bg: #1abc9c;
+$font-family: 'Segoe UI', sans-serif;
+$box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+// ===== Header Styles =====
+.site-header {
+  width: 100%;
+  font-family: $font-family;
+  box-shadow: $box-shadow;
+
+  // --- Top Line (Logo, Search, Profile)
+  .header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    background-color: $header-bg;
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: $text-color;
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+    }
+
+    .search-bar {
+      flex: 1;
+      margin: 0 2rem;
+
+      input {
+        width: 100%;
+        padding: 0.6rem 1rem;
+        border: 1px solid $border-color;
+        border-radius: 999px;
+        font-size: 1rem;
+        background-color: $input-bg;
+
+        &:focus {
+          outline: none;
+          border-color: $primary-color;
+          box-shadow: 0 0 0 3px rgba($primary-color, 0.2);
+        }
+      }
+    }
+
+    .profile-link {
+      a {
+        display: flex;
+        align-items: center;
+        color: $text-light;
+        text-decoration: none;
+        font-size: 0.95rem;
+
+        svg {
+          width: 24px;
+          height: 24px;
+          margin-right: 0.5rem;
+          fill: currentColor;
+        }
+
+        &:hover {
+          color: $primary-color;
+        }
+      }
+    }
+  }
+
+  // --- Second Line (Category Menu)
+  .category-nav {
+    background-color: $secondary-color;
+    padding: 0.75rem 2rem;
+
+    ul {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+
+      li {
+        a {
+          text-decoration: none;
+          color: $text-color;
+          font-weight: 500;
+          font-size: 0.95rem;
+
+          &:hover {
+            color: $primary-color;
+          }
+        }
+      }
+    }
+  }
+}
+
+// ===== Responsive Layout (optional) =====
+@media (max-width: 768px) {
+  .site-header {
+    .header-top {
+      flex-direction: column;
+      align-items: stretch;
+
+      .search-bar {
+        margin: 1rem 0;
+      }
+
+      .profile-link {
+        justify-content: flex-end;
+      }
+    }
+
+    .category-nav {
+      ul {
+        flex-wrap: wrap;
+        gap: 1rem;
+      }
+    }
+  }
+}

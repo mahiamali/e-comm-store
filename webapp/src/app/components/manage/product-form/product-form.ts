@@ -15,6 +15,7 @@ import { Brand } from '../../../types/brand';
 import { Category } from '../../../types/category';
 import { CategoryService } from '../../../services/category';
 import { BrandService } from '../../../services/brand';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-product-form',
@@ -24,6 +25,7 @@ import { BrandService } from '../../../services/brand';
     FormsModule,
     MatButtonModule,
     MatSelectModule,
+    MatCheckboxModule,
   ],
   templateUrl: './product-form.html',
   styleUrl: './product-form.scss',
@@ -39,6 +41,8 @@ export class ProductForm {
     images: this.formBuilder.array([]),
     categoryId: [null, [Validators.required]],
     brandId: [null, [Validators.required]],
+    isFeatured: [false],
+    isNewProduct: [false],
   });
 
   categoryService = inject(CategoryService);

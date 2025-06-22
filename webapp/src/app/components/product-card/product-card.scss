@@ -1,0 +1,107 @@
+// ===== Variables =====
+$card-bg: #ffffff;
+$card-border: #e5e7eb;
+$card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+$primary-color: #007bff;
+$price-color: #1f2937;
+$text-color: #374151;
+$description-color: #6b7280;
+$rating-color: #f59e0b;
+$font-family: "Segoe UI", sans-serif;
+
+@use 'sass:color';
+
+// ===== Product Card Styles =====
+.product-card {
+  width: 100%;
+  // max-width: 300px;
+  height: 100%;
+  background-color: $card-bg;
+  border: 1px solid $card-border;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: $card-shadow;
+  font-family: $font-family;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .product-image {
+    img {
+      width: 100%;
+      height: 200px;
+      display: block;
+      object-fit: cover;
+      border-bottom: 1px solid $card-border;
+    }
+  }
+
+  .product-info {
+    padding: 1rem;
+
+    .product-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: $text-color;
+      margin-bottom: 0.3rem;
+    }
+
+    .product-description {
+      font-size: 0.9rem;
+      color: $description-color;
+      margin-bottom: 0.6rem;
+      line-height: 1.4;
+    }
+
+    .product-price {
+      font-size: 1rem;
+      font-weight: bold;
+      color: $price-color;
+      margin-bottom: 0.5rem;
+    }
+
+    .product-rating {
+      font-size: 0.9rem;
+      color: $rating-color;
+      margin-bottom: 1rem;
+    }
+
+    .add-to-cart {
+      width: 100%;
+      background-color: $primary-color;
+      color: white;
+      border: none;
+      padding: 0.6rem;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: color.adjust($primary-color, $lightness: 8%);
+      }
+    }
+  }
+
+  .product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: center;
+
+    .product-card {
+      flex: 1 1 260px;
+    }
+  }
+
+  .product-description {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}

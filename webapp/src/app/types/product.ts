@@ -3,8 +3,10 @@ export interface Product {
   name: string;
   shortDescription: string;
   description: string;
-  price: Number;
+  price: number;
   discount: Number;
   images: string[];
   categoryId: string;
+  isFeatured: boolean;
+  isNewProduct: boolean;
 }
