@@ -1,7 +1,7 @@
 const express = require("express")
 const router = express.Router()
 const Category = require("./../db/category");
-const { addCategory, updateCategory, deleteCategory, getCategories } = require("../handlers/category-handler");
+const { addCategory, updateCategory, deleteCategory, getCategories, getCategoryByID } = require("../handlers/category-handler");
 
 router.post("", async(req, res)=>{
     let model = req.body;
@@ -11,6 +11,12 @@ router.post("", async(req, res)=>{
 
 router.get("", async(req, res)=>{
     let result = await getCategories();
+    res.send(result);
+})
+
+router.get("/:id", async(req, res)=>{
+    let id = req.params['id'];
+    let result = await getCategoryByID(id);
     res.send(result);
 })
 
