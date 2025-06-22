@@ -1,44 +1,69 @@
 <div class="flex flex-col items-center px-40 mt-10">
-    @if(isEdit){<h1 class="text-5xl font-bold mb-5">Update New Product</h1>}
+    @if(isEdit){<h1 class="text-5xl font-bold mb-5">Update Product</h1>}
     @else{<h1 class="text-5xl font-bold mb-5">Add New Product</h1>}
-    <form class="shadow-sm p-4">
+    <form class="shadow-sm p-4" [formGroup]="productForm">
         <div class="flex flex-wrap">
             <div class="w-full gap-4">
                 <mat-form-field class="w-full">
                     <mat-label>Name</mat-label>
-                    <input matInput type="text" [(ngModel)]="name" [ngModelOptions]="{standalone: true}">
+                    <input matInput type="text" formControlName="name">
                 </mat-form-field>
+
+                <mat-form-field class="w-full">
+                    <mat-label>Category</mat-label>
+                    <mat-select formControlName="categoryId">
+                        @for (item of categories; track $index) {
+                        <mat-option [value]="item._id">{{item.name}}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="w-full">
+                    <mat-label>Brand</mat-label>
+                    <mat-select formControlName="brandId">
+                        @for (item of brands; track $index) {
+                        <mat-option [value]="item._id">{{item.name}}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+
                 <mat-form-field class="w-full">
                     <mat-label>Short Description</mat-label>
-                    <input matInput type="text" [(ngModel)]="shortDescription" [ngModelOptions]="{standalone: true}">
+                    <input matInput type="text" formControlName="shortDescription">
                 </mat-form-field>
                 <mat-form-field class="w-full">
                     <mat-label>Description</mat-label>
-                    <textarea matInput type="text" rows="5" [(ngModel)]="description"
-                        [ngModelOptions]="{standalone: true}"></textarea>
+                    <textarea matInput type="text" rows="5" formControlName="description"></textarea>
                 </mat-form-field>
                 <mat-form-field class="w-full">
                     <mat-label>Price</mat-label>
-                    <input matInput type="number" [(ngModel)]="price" [ngModelOptions]="{standalone: true}">
+                    <input matInput type="number" formControlName="price">
                 </mat-form-field>
                 <mat-form-field class="w-full">
                     <mat-label>Discount</mat-label>
-                    <input matInput type="number" [(ngModel)]="discount" [ngModelOptions]="{standalone: true}">
+                    <input matInput type="number" formControlName="discount">
                 </mat-form-field>
-                <div class="w-full flex flex-col">
-                    <h4>Images</h4>
+                <div class="w-full flex flex-col" formArrayName="images">
+                    <div class="flex justify-between">
+                        <h4 class="text-3xl font-bold">Images</h4>
+                        <button mat-raised-button color="primary" (click)="addImage()" class="mb-5">Add Image</button>
+                        <button mat-raised-button color="warn" (click)="removeImage()" class="mb-5">Remove
+                            Image</button>
+                    </div>
+                    @for(item of images.controls; track $index){
                     <mat-form-field class="w-full">
-                        <mat-label>Image 1</mat-label>
-                        <input matInput type="text" [(ngModel)]="images" [ngModelOptions]="{standalone: true}">
+                        <mat-label>Image {{$index + 1}}</mat-label>
+                        <input matInput type="text" [formControlName]="$index">
                     </mat-form-field>
+                    }
                 </div>
             </div>
             <div class="w-full flex justify-center">
                 @if(isEdit){
-                    <button mat-raised-button color="primary" [disabled]="!name" (click)="update()">Update</button>
+                <button mat-raised-button color="primary" [disabled]="productForm.invalid" (click)="update()">Update</button>
                 }
                 @else{
-                    <button mat-raised-button color="primary" [disabled]="!name" (click)="add()">Add</button>
+                <button mat-raised-button color="primary" [disabled]="productForm.invalid" (click)="add()">Add</button>
                 }
             </div>
         </div>
