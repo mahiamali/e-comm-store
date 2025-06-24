@@ -3,10 +3,11 @@ import { CustomerService } from '../../services/customer';
 import { Product } from '../../types/product';
 import { ProductCard } from '../product-card/product-card';
 import { NgbCarouselConfig, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
-  imports: [NgbCarouselModule, ProductCard],
+  imports: [NgbCarouselModule, ProductCard, RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })

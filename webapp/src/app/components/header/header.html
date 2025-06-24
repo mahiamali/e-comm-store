@@ -2,11 +2,11 @@
     <!-- Top Header -->
     <div class="header-top">
         <div class="logo">
-            <a href="/">ShopNow</a>
+            <a routerLink="">ShopNow</a>
         </div>
 
         <div class="search-bar">
-            <input type="text" placeholder="Search products..." />
+            <input type="text" placeholder="Search products..." (keyup.enter)="onSearch($event)"/>
         </div>
 
         <div class="profile-link">
@@ -24,7 +24,7 @@
     <nav class="category-nav">
         <ul>
             @for (category of categoryList; track $index) {
-            <li><a href="/category/{{category._id}}">{{category.name}}</a></li>
+            <li><a (click)="searchCategory(category._id)">{{category.name}}</a></li>
             }
         </ul>
     </nav>

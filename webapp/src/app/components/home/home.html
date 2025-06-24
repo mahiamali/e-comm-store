@@ -4,7 +4,7 @@
         <ngb-carousel [interval]="3000" [pauseOnHover]="true" [wrap]="true" class="carousel-container">
             @for (slide of bannerImages; track slide._id) {
             <ng-template ngbSlide>
-                <div class="relative h-[600px]">
+                <div class="relative h-[600px]" [routerLink]="['product/'+slide._id]">
                     <img class="w-full h-full object-fit-contain" [src]="slide.images[0]" [alt]="slide.name" />
                     <div class="absolute bottom-0 left-0 right-0 bg-black/60 text-white p-4 z-20">
                         <h3 class="text-lg font-bold">{{ slide.name }}</h3>
