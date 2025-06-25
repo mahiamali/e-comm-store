@@ -10,11 +10,13 @@ import { ProductList } from './components/product-list/product-list';
 import { ProductDetail } from './components/product-detail/product-detail';
 import { Register } from './components/register/register';
 import { Login } from './components/login/login';
+import { AuthGuard } from './core/auth-guard';
 
 export const routes: Routes = [
     {
         path: "",
-        component: Home
+        component: Home,
+        canActivate: [AuthGuard]
     },
     {
         path: "admin/categories",
@@ -54,11 +56,13 @@ export const routes: Routes = [
     },
     {
         path: "products",
-        component: ProductList
+        component: ProductList,
+        canActivate: [AuthGuard]
     },
     {
         path: "product/:id",
-        component: ProductDetail
+        component: ProductDetail,
+        canActivate: [AuthGuard]
     },
     {
         path: "register",

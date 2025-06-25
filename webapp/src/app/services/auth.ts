@@ -26,4 +26,27 @@ export class AuthService {
       password,
     });
   }
+
+  get isLoggedIn(){
+    let token = localStorage.getItem("token");
+    if(token){
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  get userName(){
+    let userData = localStorage.getItem("user");
+    if(userData){
+      return JSON.parse(userData).name;
+    }else{
+      return null;
+    }
+  }
+
+  logout(){
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+  }
 }

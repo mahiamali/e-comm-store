@@ -6,13 +6,13 @@ import {
 import { provideRouter } from '@angular/router';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { routes } from './app.routes';
-import { TokenHttpInterceptor } from './token-http-interceptor';
+import { TokenHttpInterceptor } from './core/token-http-interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
-    provideHttpClient(withInterceptors([TokenHttpInterceptor]),)
+    provideHttpClient(withInterceptors([TokenHttpInterceptor]),) // ✅ provide the guard here
   ]
 };
