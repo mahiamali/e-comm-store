@@ -11,6 +11,9 @@ import { ProductDetail } from './components/product-detail/product-detail';
 import { Register } from './components/register/register';
 import { Login } from './components/login/login';
 import { AuthGuard } from './core/auth-guard';
+import { AdminDashboard } from './components/manage/admin-dashboard/admin-dashboard';
+import { AdminGuard } from './core/admin-guard';
+import { CustomerProfile } from './components/customer-profile/customer-profile';
 
 export const routes: Routes = [
     {
@@ -20,39 +23,48 @@ export const routes: Routes = [
     },
     {
         path: "admin/categories",
-        component: Categories
+        component: Categories,
+        canActivate: [AdminGuard]
     },
     {
         path: "admin/categories/add",
-        component: CategoryForm
+        component: CategoryForm,
+        canActivate: [AdminGuard]
     },
     {
         path: "admin/categories/:id",
-        component: CategoryForm
+        component: CategoryForm,
+        canActivate: [AdminGuard]
     },
     {
         path: "admin/brands",
-        component: Brands
+        component: Brands,
+        canActivate: [AdminGuard]
     },
     {
         path: "admin/brands/add",
-        component: BrandForm
+        component: BrandForm,
+        canActivate: [AdminGuard]
     },
     {
         path: "admin/brands/:id",
-        component: BrandForm
+        component: BrandForm,
+        canActivate: [AdminGuard]
     },
     {
         path: "admin/products",
-        component: Products
+        component: Products,
+        canActivate: [AdminGuard]
     },
     {
         path: "admin/products/add",
-        component: ProductForm
+        component: ProductForm,
+        canActivate: [AdminGuard]
     },
     {
         path: "admin/products/:id",
-        component: ProductForm
+        component: ProductForm,
+        canActivate: [AdminGuard]
     },
     {
         path: "products",
@@ -71,5 +83,15 @@ export const routes: Routes = [
     {
         path: "login",
         component: Login
+    },
+    {
+        path: "admin",
+        component: AdminDashboard,
+        canActivate: [AdminGuard]
+    },
+    {
+        path: "profile",
+        component: CustomerProfile,
+        canActivate: [AuthGuard]
     }
 ];

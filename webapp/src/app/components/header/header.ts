@@ -4,10 +4,11 @@ import { Category } from '../../types/category';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth';
 import { CustomerService } from '../../services/customer';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-header',
-  imports: [RouterLink],
+  imports: [RouterLink, FormsModule],
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
@@ -16,8 +17,10 @@ export class Header {
   categoryList: Category[] = [];
   router = inject(Router);
   authService = inject(AuthService);
+  searchTerm!:string;
 
   ngOnInit() {
+    this.searchTerm = "";
     this.customerService.getCategories().subscribe((result) => {
       this.categoryList = result;
     });
@@ -30,6 +33,7 @@ export class Header {
   }
 
   searchCategory(id: string | undefined) {
+    this.searchTerm = "";
     this.router.navigateByUrl('/products?categoryid=' + id);
   }
 

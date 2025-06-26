@@ -1,0 +1,37 @@
+<div class="max-w-4xl mx-auto mt-10 p-6 bg-white shadow-lg rounded-xl">
+    <div class="flex flex-col md:flex-row items-center md:items-start gap-6">
+        <!-- Profile Image -->
+        <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-primary shadow-md">
+            <img [src]="userData.profileImageUrl || 'assets/images/default-avatar.png'" alt="Profile Image"
+                class="w-full h-full object-cover" />
+        </div>
+
+        <!-- Profile Info -->
+        <div class="flex-1">
+            <div class="flex items-center justify-between mb-4">
+                <h2 class="text-2xl font-bold text-gray-800">{{ userData.name }}</h2>
+                <button class="text-blue-600 hover:text-blue-800 font-medium text-sm" (click)="onEditProfile()">
+                    ✏️ Edit Profile
+                </button>
+            </div>
+
+            <p class="text-gray-600 mb-1"><strong>Email:</strong> {{ userData.email }}</p>
+            <div class="mt-4 flex flex-wrap gap-2">
+                @if(userData.isAdmin){
+                <p class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium"><strong>Role:</strong>
+                    Admin Profile</p>
+                }@else {
+                <p class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium"><strong>Role:</strong>
+                    Customer</p>
+                }
+            </div>
+        </div>
+    </div>
+
+    <!-- Optional Actions -->
+    <div class="mt-6 flex justify-end gap-4">
+        <button class="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded" (click)="onLogout()">Logout</button>
+        <button class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
+            (click)="onSettings()">Settings</button>
+    </div>
+</div>

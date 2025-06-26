@@ -30,16 +30,62 @@ async function deleteProduct(id) {
 
 async function getNewProducts() {
   let products = await Product.find({
-    isNewProduct:true
+    isNewProduct: true,
   });
   return products.map((c) => c.toObject());
 }
 
 async function getFeaturedProducts() {
   let products = await Product.find({
-    isFeatured:true
+    isFeatured: true,
   });
   return products.map((c) => c.toObject());
+}
+
+async function getProductForListing(
+  searchTerm,
+  categoryId,
+  brandId,  
+  sortBy,
+  sortOrder,
+  page,
+  pageSize,
+) {
+  if (!sortBy) {
+    sortBy = "price";
+  }
+
+  if (!sortOrder) {
+    sortOrder = -1;
+  }
+
+  let queryFilter = {};
+  if (searchTerm) {
+    queryFilter.$or = [
+      {
+        name: { $regex: ".*" + searchTerm + "*." },
+      },
+      {
+        shortDescription: { $regex: ".*" + searchTerm + "*." },
+      },
+    ];
+  }
+
+  if (categoryId) {
+    queryFilter.categoryId = categoryId;
+  }
+
+  if (brandId) {
+    queryFilter.brandId = brandId;
+  }
+
+  console.log("queryFilter", queryFilter);
+
+  let products = await Product.find(queryFilter)
+    .sort({ [sortBy]: +sortOrder })
+    .skip((+page - 1) * +pageSize)
+    .limit(+pageSize);
+  return products.map((x) => x.toObject());
 }
 
 module.exports = {
@@ -50,4 +96,5 @@ module.exports = {
   deleteProduct,
   getNewProducts,
   getFeaturedProducts,
+  getProductForListing,
 };

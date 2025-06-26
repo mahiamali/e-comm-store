@@ -1,1 +1,54 @@
-<p>product-list works!</p>
+<div class="product-list-page grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-4 px-6 py-4">
+
+    <!-- Filters Sidebar -->
+    <div class="filter-card bg-white shadow-md rounded-lg p-4 h-full lg:sticky top-4">
+        <h5 class="text-xl font-bold mb-4">Filters</h5>
+        <hr>
+        <!-- Example filter sections -->
+
+        <!-- Category filter -->
+        <div class="mb-4">
+            <label class="block font-medium text-gray-700 mb-2">Category</label>
+            <select class="w-full p-2 border rounded">
+                @for (category of categories; track $index) {
+                <option [value]="category._id">{{category.name}}</option>
+                }
+            </select>
+        </div>
+
+        <!-- Brands filter -->
+        <div class="mb-4">
+            <label class="block font-medium text-gray-700 mb-2">Brands</label>
+            <select class="w-full p-2 border rounded">
+                @for (brand of brands; track $index) {
+                <option [value]="brand._id">{{brand.name}}</option>
+                }
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label class="block font-medium text-gray-700 mb-2">Price Range</label>
+            <input type="range" class="w-full" min="100" max="10000" />
+        </div>
+
+        <div>
+            <button class="w-full bg-blue-600 text-white rounded px-4 py-2 hover:bg-blue-700 transition">Apply
+                Filters</button>
+        </div>
+    </div>
+
+    <!-- Product Grid -->
+    <div class="bg-white shadow-md rounded-lg p-4">
+        <h5 class="text-xl font-bold mb-2">Products</h5>
+        <hr class="mb-4" />
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+            @for (product of products; track $index) {
+            <app-product-card [product]="product"></app-product-card>
+            }
+            @empty {
+            <p class="text-gray-500">No Products found</p>
+            }
+        </div>
+    </div>
+</div>

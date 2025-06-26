@@ -1,0 +1,34 @@
+.product-list-page {
+  min-height: 100vh;
+
+  .filter-card {
+    min-height: calc(100vh - 4rem);
+    position: sticky;
+    top: 1rem;
+    overflow-y: auto;
+
+    // Add custom scrollbar if needed
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+    }
+  }
+
+  .products-wrapper {
+    background-color: #fff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5rem;
+    padding: 1rem;
+
+    @media (min-width: 640px) {
+      padding: 1.5rem;
+    }
+
+    @media (min-width: 1024px) {
+      padding: 2rem;
+    }
+  }
+}

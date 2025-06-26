@@ -7,17 +7,20 @@
 
         @if(authService.isLoggedIn){
         <div class="search-bar">
-            <input type="text" placeholder="Search products..." (keyup.enter)="onSearch($event)" />
+            <input type="text" placeholder="Search products..." [(ngModel)]="searchTerm" (keyup.enter)="onSearch($event)" />
         </div>
 
         <div class="profile-link">
-            <a href="/profile">
+            <a routerLink="/profile" class="cursor-pointer">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path
                         d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z" />
                 </svg>
                 <span>{{authService.userName}}</span>
             </a>
+            @if(authService.isAdmin){
+            <a routerLink="/admin" class="cursor-pointer login">Admin Dashboard</a>
+            }
             <a (click)="logout()" class="cursor-pointer login">Logout</a>
         </div>
         }@else {

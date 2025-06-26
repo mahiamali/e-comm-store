@@ -45,6 +45,25 @@ export class AuthService {
     }
   }
 
+  // To get all user data
+  get userData(){
+    let userData = localStorage.getItem("user");
+    if(userData){
+      return JSON.parse(userData);
+    }else{
+      return null;
+    }
+  }
+
+  get isAdmin(){
+    let userData = localStorage.getItem("user");
+    if(userData){
+      return JSON.parse(userData).isAdmin;
+    }else{
+      return null;
+    }
+  }
+
   logout(){
     localStorage.removeItem("token");
     localStorage.removeItem("user");
