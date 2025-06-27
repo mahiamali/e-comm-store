@@ -45,11 +45,11 @@ async function getFeaturedProducts() {
 async function getProductForListing(
   searchTerm,
   categoryId,
-  brandId,  
+  brandId,
   sortBy,
   sortOrder,
   page,
-  pageSize,
+  pageSize
 ) {
   if (!sortBy) {
     sortBy = "price";
@@ -81,11 +81,18 @@ async function getProductForListing(
 
   console.log("queryFilter", queryFilter);
 
+  const totalProducts = await Product.countDocuments(queryFilter);
+
   let products = await Product.find(queryFilter)
     .sort({ [sortBy]: +sortOrder })
     .skip((+page - 1) * +pageSize)
     .limit(+pageSize);
-  return products.map((x) => x.toObject());
+  // return products.map((x) => x.toObject());
+
+  return {
+    data: products.map((x) => x.toObject()),
+    total: totalProducts,
+  };
 }
 
 module.exports = {

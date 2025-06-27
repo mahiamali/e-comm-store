@@ -1,99 +1,121 @@
-<div class="product-list-page grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-4 px-6 py-4">
+<div class="product-list-page min-h-screen flex flex-col">
 
-    <!-- Filters Sidebar -->
-    <div class="filter-card bg-white shadow-md rounded-lg p-4 h-full lg:sticky top-4">
-        <h5 class="text-xl font-bold mb-4">Filters</h5>
-        <hr>
-        <!-- Example filter sections -->
+    <!-- Grid Layout -->
+    <div class="grid grid-cols-1 lg:grid-cols-[300px_1fr] gap-4 px-6 py-4 flex-1">
 
-        <!-- Category filter -->
-        <div class="mb-4">
-            <label class="block font-medium text-gray-700 mb-2">Category</label>
-            <select class="w-full p-2 border rounded" name="categoryId" [(ngModel)]="categoryId"
-                (change)="getProducts()">
-                @for (category of categories; track $index) {
-                <option [value]="category._id">{{category.name}}</option>
-                }
-            </select>
-        </div>
+        <!-- Filters Sidebar -->
+        <div class="filter-card bg-white shadow-md rounded-lg p-4 h-full lg:sticky top-4">
+            <h5 class="text-xl font-bold mb-4">Filters</h5>
+            <hr>
+            <!-- Example filter sections -->
 
-        <!-- Brands filter -->
-        <div class="mb-4">
-            <label class="block font-medium text-gray-700 mb-2">Brands</label>
-            <select class="w-full p-2 border rounded" name="brandId" [(ngModel)]="brandId" (change)="getProducts()">
-                @for (brand of brands; track $index) {
-                <option [value]="brand._id">{{brand.name}}</option>
-                }
-            </select>
-        </div>
-
-        <div class="mb-4">
-            <label class="block font-medium text-gray-700 mb-2">Price Range</label>
-            <input type="range" class="w-full" min="100" max="10000" />
-        </div>
-
-        <div>
-            <button class="w-full bg-blue-600 text-white rounded px-4 py-2 hover:bg-blue-700 transition">Apply
-                Filters</button>
-        </div>
-    </div>
-
-    <!-- Product Grid -->
-    <div class="bg-white shadow-md rounded-lg p-4">
-        <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
-            <h5 class="text-xl font-bold">Products</h5>
-
-            <!-- Sort By Dropdown -->
-            <div class="flex items-center gap-2">
-                <label for="sortBy" class="text-sm font-medium text-gray-700">Sort by:</label>
-                <select id="sortBy" (change)="onSortChange($event)"
-                    class="border border-gray-300 rounded px-3 py-1 text-sm">
-                    <option [value]="0">Default</option>
-                    <option [value]="1">Price: Low to High</option>
-                    <option [value]="-1">Price: High to Low</option>
+            <!-- Category filter -->
+            <div class="mb-4">
+                <label class="block font-medium text-gray-700 mb-2">Category</label>
+                <select class="w-full p-2 border rounded" name="categoryId" [(ngModel)]="categoryId"
+                    (change)="getProducts()">
+                    @for (category of categories; track $index) {
+                    <option [value]="category._id">{{category.name}}</option>
+                    }
                 </select>
+            </div>
+
+            <!-- Brands filter -->
+            <div class="mb-4">
+                <label class="block font-medium text-gray-700 mb-2">Brands</label>
+                <select class="w-full p-2 border rounded" name="brandId" [(ngModel)]="brandId" (change)="getProducts()">
+                    @for (brand of brands; track $index) {
+                    <option [value]="brand._id">{{brand.name}}</option>
+                    }
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label class="block font-medium text-gray-700 mb-2">Price Range</label>
+                <input type="range" class="w-full" min="100" max="10000" />
+            </div>
+
+            <div>
+                <button class="w-full bg-blue-600 text-white rounded px-4 py-2 hover:bg-blue-700 transition">Apply
+                    Filters</button>
             </div>
         </div>
 
-        <hr class="mb-4" />
+        <!-- Product Grid -->
+        <div class="bg-white shadow-md rounded-lg p-4 flex flex-col min-h-[500px]">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-1">
+                <h5 class="text-xl font-bold">Products</h5>
 
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-            @for (product of products; track $index) {
-            <app-product-card [product]="product"></app-product-card>
-            }
-            @empty {
-            <p class="text-gray-500">No Products found</p>
-            }
-        </div>
+                <!-- Sort By Dropdown -->
+                <div class="flex items-center gap-2">
+                    <label for="sortBy" class="text-sm font-medium text-gray-700">Sort by:</label>
+                    <select id="sortBy" (change)="onSortChange($event)"
+                        class="border border-gray-300 rounded px-3 py-1 text-sm">
+                        <option [value]="0">Default</option>
+                        <option [value]="1">Price: Low to High</option>
+                        <option [value]="-1">Price: High to Low</option>
+                    </select>
+                </div>
+            </div>
 
-        <!-- Pagination -->
-        <div class="mt-8 flex justify-center items-center space-x-2 text-sm font-medium">
+            <hr class="mb-4" />
 
-            <!-- Previous Button -->
-            <button class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100" [disabled]="page === 1"
-                (click)="goToPage(page - 1)">
-                Prev
-            </button>
+            <div class="flex-grow transition-opacity duration-500" [class.opacity-50]="isLoading">
+                <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                    @for (product of products; track $index) {
+                    <app-product-card [product]="product"></app-product-card>
+                    }
+                    @empty {
+                    <p class="text-gray-500">No Products found</p>
+                    }
+                </div>
+            </div>
 
-            <!-- Page Numbers -->
-            @for (currentPage of totalPagesArray; track $index) {
-            <ng-container>
-                <button class="px-3 py-1 rounded border" [ngClass]="{
-                            'bg-blue-600 text-white border-blue-600': currentPage === page,
-                            'border-gray-300 hover:bg-gray-100': currentPage !== page
-                        }" (click)="goToPage(currentPage)">
-                    {{ currentPage }}
+            <!-- Pagination -->
+            <div class="mt-8 flex justify-center items-center space-x-2 text-sm font-medium">
+
+                <!-- First Page -->
+                <button class="mx-1 px-3 py-1 rounded border border-gray-300 hover:bg-gray-100"
+                    [disabled]="currentPage === 1" (click)="goToPage(1)">
+                    First
                 </button>
-            </ng-container>
-            }
 
-            <!-- Next Button -->
-            <button class="px-3 py-1 rounded border border-gray-300 hover:bg-gray-100"
-                [disabled]="page === pageSize" (click)="goToPage(page + 1)">
-                Next
-            </button>
+                <!-- Previous Button -->
+                <button class="mx-1 px-3 py-1 rounded border border-gray-300 hover:bg-gray-100"
+                    [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)">
+                    Prev
+                </button>
+
+                <!-- Page Numbers -->
+                @for (page of visiblePages; track $index) {
+                    @if (page !== '...') {
+                    <button class="px-3 py-1 rounded border transition-all duration-200" [ngClass]="{
+                                        'bg-blue-600 text-white border-blue-600': page === currentPage,
+                                        'border-gray-300 hover:bg-gray-100': page !== currentPage
+                                    }" (click)="goToPage(+page)">
+                        {{ page }}
+                    </button>
+                    } @else {
+                    <span class="px-2 text-gray-500">...</span>
+                    }
+                }
+
+                <!-- Next Button -->
+                <button class="mx-1 px-3 py-1 rounded border border-gray-300 hover:bg-gray-100"
+                    [disabled]="currentPage === totalPages" (click)="goToPage(currentPage + 1)">
+                    Next
+                </button>
+
+                <!-- Last Page -->
+                <button class="mx-1 px-3 py-1 rounded border border-gray-300 hover:bg-gray-100"
+                    [disabled]="currentPage === totalPages" (click)="goToPage(totalPages)">
+                    Last
+                </button>
+
+            </div>
 
         </div>
 
     </div>
+
 </div>
