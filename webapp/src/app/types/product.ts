@@ -4,7 +4,7 @@ export interface Product {
   shortDescription: string;
   description: string;
   price: number;
-  discount: Number;
+  discount: number;
   images: string[];
   categoryId: string;
   isFeatured: boolean;

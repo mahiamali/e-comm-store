@@ -7,9 +7,14 @@ import { RouterLink } from '@angular/router';
   selector: 'app-product-card',
   imports: [CurrencyPipe, RouterLink],
   templateUrl: './product-card.html',
-  styleUrl: './product-card.scss'
+  styleUrl: './product-card.scss',
 })
 export class ProductCard {
-  @Input() product!:Product;
+  @Input() product!: Product;
 
+  get sellingPrice() {
+    return Math.round(
+      this.product.price - (this.product.price * this.product.discount) / 100
+    );
+  }
 }

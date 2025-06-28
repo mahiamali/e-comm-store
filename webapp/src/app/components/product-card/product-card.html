@@ -1,11 +1,15 @@
-<div class="product-card" [routerLink]="['product/'+product._id]">
+<div class="product-card" [routerLink]="['/product/'+product._id]">
     <div class="product-image">
         <img src="{{product.images[0]}}" alt="Product Name" />
     </div>
     <div class="product-info">
         <h3 class="product-title">{{product.name}}</h3>
         <p class="product-description">{{product.shortDescription}}</p>
-        <p class="product-price">{{product.price | currency:'INR'}}</p>
+        <div class="my-4">
+            <span class="text-lg font-bold text-green-700">{{ sellingPrice | currency:'INR':'symbol':'1.0-0' }}</span>
+            <span class="ms-2 text-sm text-gray-400"><s>{{ product.price | currency:'INR':'symbol':'1.0-0' }}</s></span>
+            <span class="ms-2 text-sm font-semibold text-green-700">{{ product.discount }}% off</span>
+        </div>
         <!-- <div class="product-rating">
             ⭐⭐⭐⭐☆ (120)
         </div> -->

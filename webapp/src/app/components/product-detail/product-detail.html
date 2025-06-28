@@ -1,1 +1,112 @@
-<p>product-detail works!</p>
+<div class="product-detail-page grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-6 px-6 py-8">
+    <!-- Product Image Gallery -->
+    <div class="gallery">
+        <div class="main-image border rounded overflow-hidden shadow-md">
+            <img [src]="product.images[selectedImageIndex]" alt="Product Image" class="w-full h-auto object-contain">
+        </div>
+        <div class="thumbnail-row flex gap-2 mt-4">
+            @for (img of product.images; track $index) {
+            <img [src]="img" (click)="selectedImageIndex = $index"
+                [ngClass]="{ 'border-2 border-blue-600': selectedImageIndex === $index }"
+                class="w-20 h-20 rounded cursor-pointer object-contain  hover:opacity-80">
+            }
+        </div>
+    </div>
+
+    <!-- Product Info -->
+    <div class="product-info bg-white p-6 rounded shadow-md flex flex-col justify-between min-h-[450px]">
+        <h2 class="text-2xl font-bold mb-2">{{ product.name }}</h2>
+        <p class="text-gray-600 mb-4">{{ product.shortDescription }}</p>
+        <div class="mb-4">
+            <p class="text-sm text-green-600 p-0 m-0 font-semibold">Special price</p>
+            <span class="text-xl font-bold text-green-700">{{ sellingPrice | currency:'INR':'symbol':'1.0-0' }}</span>
+            <span class="ms-2 text-sm text-gray-400"><s>{{ product.price | currency:'INR':'symbol':'1.0-0' }}</s></span>
+            <span class="ms-2 text-sm font-semibold text-green-700">{{ product.discount }}% off</span>
+        </div>
+
+        <!-- Rating Section -->
+        <div class="flex items-center gap-2 mb-6">
+            <span class="text-yellow-500 text-lg">⭐</span>
+            <span class="font-bold text-lg">{{ averageRating }}</span>
+            <span class="text-gray-600">({{ reviews.length }} reviews)</span>
+        </div>
+
+        <!-- Quantity Section -->
+        <div class="mb-6">
+            <label for="quantity" class="block text-sm font-medium text-gray-700 mb-1 me-2">Quantity</label>
+            <input id="quantity" type="number" [(ngModel)]="quantity" min="1"
+                class="w-24 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500" />
+        </div>
+        <!-- Add to Cart Button -->
+        <button class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded transition">
+            Add to Cart
+        </button>
+    </div>
+</div>
+
+<!-- Description and Reviews -->
+<div class="product-detail-container">
+
+    <!-- Product Description Section -->
+    <div class="section-card">
+        <h3 class="text-xl font-bold mb-4">Product Description</h3>
+        <hr />
+        <pre class="text-gray-700 leading-relaxed">{{ product.description }}</pre>
+    </div>
+
+    <!-- Customer Reviews Section -->
+    <div class="section-card reviews-section">
+
+        <!-- Rating Summary -->
+        <h4 class="text-xl font-semibold mb-2">Customer Reviews</h4>
+        <div class="rating-summary">
+            <span class="star-icon">⭐</span>
+            <span class="average">{{ averageRating }}</span>
+            <span class="count">({{ reviews.length }} reviews)</span>
+        </div>
+        <hr>
+
+        <!-- Review List -->
+        <div class="space-y-4">
+            @for (review of reviews; track $index) {
+            <div class="review-card">
+                <div class="review-header">
+                    <strong>{{ review.reviewer }}</strong>
+                    <span class="stars">
+                        @for (star of [1,2,3,4,5]; track $index) {
+                        <span [ngClass]="{ 'faded': star > review.rating }">⭐</span>
+                        }
+                    </span>
+                </div>
+                <p class="comment">{{ review.comment }}</p>
+            </div>
+            }
+        </div>
+
+        <!-- Review Form -->
+        <div class="review-form">
+            <h5 class="text-lg font-semibold mb-2">Write a Review</h5>
+            <form (submit)="submitReview(); $event.preventDefault()" class="space-y-3">
+
+                <input type="text" [(ngModel)]="newReview.reviewer" name="reviewer" placeholder="Your Name" required />
+
+                <textarea [(ngModel)]="newReview.comment" name="comment" rows="3" placeholder="Your Review"
+                    required></textarea>
+
+                <!-- Star Rating Selector -->
+                <div class="star-selector">
+                    @for (star of [1,2,3,4,5]; track $index) {
+                    <span (click)="selectRating(star)"
+                        [ngClass]="{ 'active': newReview.rating >= star, 'inactive': newReview.rating < star }">
+                        ★
+                    </span>
+                    }
+                </div>
+
+                <button type="submit">
+                    Submit Review
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

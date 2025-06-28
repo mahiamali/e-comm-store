@@ -33,22 +33,7 @@ export class CustomerService {
   getBrands() {
     return this.http.get<Brand[]>(environment.apiUrl + '/customer/brands');
   }
-
-  // getProducts(
-  //   searchTerm: string,
-  //   categoryId: string,
-  //   brandId: string,
-  //   sortBy: string,
-  //   sortOrder: number,
-  //   page: number,
-  //   pageSize: number
-  // ) {
-  //   return this.http.get<Product[]>(
-  //     environment.apiUrl +
-  //       `/customer/products?searchTerm=${searchTerm}&categoryId=${categoryId}&brandId=${brandId}&sortBy=${sortBy}&sortOrder=${sortOrder}&page=${page}&pageSize=${pageSize}`
-  //   );
-  // }
-
+ 
   getProducts(
     searchTerm: string,
     categoryId: string,
@@ -61,5 +46,9 @@ export class CustomerService {
     return this.http.get<{ data: Product[]; total: number }>(
       `${environment.apiUrl}/customer/products?searchTerm=${searchTerm}&categoryId=${categoryId}&brandId=${brandId}&sortBy=${sortBy}&sortOrder=${sortOrder}&page=${page}&pageSize=${pageSize}`
     );
+  }
+
+  getProductById(id:string): Observable<Product>{
+    return this.http.get<Product>(environment.apiUrl + '/customer/product/'+id);
   }
 }

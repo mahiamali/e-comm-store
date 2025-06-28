@@ -4,6 +4,7 @@ const {
   getNewProducts,
   getFeaturedProducts,
   getProductForListing,
+  getProductByID,
 } = require("../handlers/product-handler");
 const { getCategories } = require("../handlers/category-handler");
 const { getBrands } = require("../handlers/brand-handler");
@@ -40,6 +41,12 @@ router.get("/products", async (req, res) => {
     pageSize
   );
   res.send(products);
+});
+
+router.get("/product/:id", async (req, res) => {
+  const id = req.params["id"];
+  let product = await getProductByID(id);
+  res.send(product);
 });
 
 module.exports = router;
