@@ -3,6 +3,22 @@ pre {
   overflow: auto;
 }
 
+// ===== Variables =====
+$card-bg: #ffffff;
+$card-border: #e5e7eb;
+$card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+
+// ===== Hero Card Styles =====
+.hero-card {
+  background-color: $card-bg;
+  border: 1px solid $card-border;
+  border-radius: 12px;
+  box-shadow: $card-shadow;
+  padding: 5px;
+  // margin: 5px 5px;
+  margin-bottom: 10px;
+}
+
 // SCSS for Product Detail Page
 .product-detail-page {
   padding: 2rem 1.5rem;
@@ -97,7 +113,7 @@ pre {
     padding: 1.5rem;
     border-radius: 0.5rem;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
-    margin-bottom: 2.5rem;
+    margin-bottom: 1rem;
 
     h3,
     h4,

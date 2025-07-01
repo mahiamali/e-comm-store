@@ -5,7 +5,7 @@ export function TokenHttpInterceptor(
   req: HttpRequest<unknown>,
   next: HttpHandlerFn
 ): Observable<HttpEvent<unknown>> {
-  console.log(req.url);
+  // console.log(req.url);
   console.log('[Interceptor] Executing for:', req.url);
   const token = localStorage.getItem('token');
   if (token) {

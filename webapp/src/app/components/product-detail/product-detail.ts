@@ -4,10 +4,11 @@ import { CurrencyPipe, NgClass } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { CustomerService } from '../../services/customer';
 import { ActivatedRoute } from '@angular/router';
+import { ProductCard } from '../product-card/product-card';
 
 @Component({
   selector: 'app-product-detail',
-  imports: [NgClass, CurrencyPipe, FormsModule],
+  imports: [NgClass, CurrencyPipe, FormsModule, ProductCard],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.scss',
 })
@@ -15,12 +16,25 @@ export class ProductDetail {
   customerService = inject(CustomerService);
   route = inject(ActivatedRoute);
   product!: Product;
+  similerProducts: Product[] = [];
 
-  ngOnInit() {
-    const productID = this.route.snapshot.params['id'];
-    this.customerService.getProductById(productID).subscribe((result) => {
-      // console.log(result);
+  constructor() {
+    // const productID = this.route.snapshot.params['id'];
+    this.route.params.subscribe((x: any) => {
+      this.getProductDetails(x.id);
+    });
+  }
+
+  getProductDetails(id: string) {
+    this.customerService.getProductById(id).subscribe((result) => {
+      console.log(result);
       this.product = result;
+
+      this.customerService
+        .getProducts('', this.product.categoryId, '', '', -1, 1, 4)
+        .subscribe((result) => {
+          this.similerProducts = result.data.filter((x)=> x._id != id);
+        });
     });
   }
 

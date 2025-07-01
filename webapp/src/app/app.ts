@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { RouterModule } from '@angular/router';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { Header } from './components/header/header';
 import { Footer } from './components/footer/footer';
 
@@ -12,4 +12,21 @@ import { Footer } from './components/footer/footer';
 })
 export class App {
   protected title = 'webapp';
+
+  constructor(private router: Router) {}
+
+  ngAfterViewInit(): void {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.smoothScrollToTop();
+      }
+    });
+  }
+
+  smoothScrollToTop(): void {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  }
 }
