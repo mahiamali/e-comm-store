@@ -1,3 +1,4 @@
+@use 'sass:color';
 // ===== Variables =====
 $card-bg: #ffffff;
 $card-border: #e5e7eb;
@@ -9,7 +10,13 @@ $description-color: #6b7280;
 $rating-color: #f59e0b;
 $font-family: "Segoe UI", sans-serif;
 
-@use 'sass:color';
+:host {
+  --cart-add-bg: #007bff; /* green-600 */
+  --cart-add-hover: #0058b6; /* green-700 */
+  --cart-remove-bg: #c50303; /* red-600 */
+  --cart-remove-hover: #990505; /* red-700 */
+}
+
 
 // ===== Product Card Styles =====
 .product-card {

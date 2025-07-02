@@ -1,18 +1,70 @@
-<div class="product-card" [routerLink]="['/product/'+product._id]">
+@if(product){
+<div class="product-card relative group flex flex-col justify-between rounded-lg shadow bg-white h-full"
+    [routerLink]="['/product/'+product._id]">
+    <!-- Wishlist Button -->
+    <button
+        class="absolute top-2 right-2 z-10 w-10 h-10 flex items-center justify-center bg-white rounded-circle shadow-md hover:bg-red-100 transition"
+        (click)="addToWishlist($event, product)">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 transition duration-200 ease-in-out" [ngClass]="{'text-red-600 fill-red-600': isInWishlist(product),
+            'text-gray-400 fill-current': !isInWishlist(product)}" viewBox="0 0 24 24">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 
+       2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 
+       4.5 2.09C13.09 3.81 14.76 3 16.5 3 
+       19.58 3 22 5.42 22 8.5c0 3.78-3.4 
+       6.86-8.55 11.54L12 21.35z" />
+        </svg>
+    </button>
+
+    <!-- Product Image -->
     <div class="product-image">
         <img src="{{product.images[0]}}" alt="Product Name" />
     </div>
-    <div class="product-info">
+
+    <!-- Product Info -->
+    <div class="product-info flex flex-col flex-1">
         <h3 class="product-title">{{product.name}}</h3>
-        <p class="product-description">{{product.shortDescription}}</p>
-        <div class="my-4">
-            <span class="text-lg font-bold text-green-700">{{ sellingPrice | currency:'INR':'symbol':'1.0-0' }}</span>
-            <span class="ms-2 text-sm text-gray-400"><s>{{ product.price | currency:'INR':'symbol':'1.0-0' }}</s></span>
-            <span class="ms-2 text-sm font-semibold text-green-700">{{ product.discount }}% off</span>
+        <p class="product-description ">{{product.shortDescription}}</p>
+
+        <!-- <button class="add-to-cart">Add to Cart</button> -->
+
+        <!-- Add/Remove from Cart Button -->
+        <div class="mt-auto pt-2">
+            <div class="product-rating">
+                ⭐⭐⭐⭐☆ (120)
+            </div>
+            <div class="my-4">
+                <span class="text-lg font-bold text-green-700">{{ sellingPrice | currency:'INR':'symbol':'1.0-0'
+                    }}</span>
+                <span class="ms-2 text-sm text-gray-400"><s>{{ product.price | currency:'INR':'symbol':'1.0-0'
+                        }}</s></span>
+                <span class="ms-2 text-sm font-semibold text-green-700">{{ product.discount }}% off</span>
+            </div>
+            <button
+                class="w-full py-2 mt-3 flex items-center justify-center gap-2 rounded-2 transition duration-300 font-medium text-white"
+                [ngClass]="{
+            'bg-[var(--cart-add-bg)] hover:bg-[var(--cart-add-hover)]': !isInCart(product),
+            'bg-[var(--cart-remove-bg)] hover:bg-[var(--cart-remove-hover)]': isInCart(product)
+            }" (click)="toggleCart($event, product)">
+                @if(!isInCart(product)){
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9h14l-2-9M9 21a1 1 0 100-2 1 1 0 000 2zm6 0a1 1 0 100-2 1 1 0 000 2z" />
+                </svg>
+                Add to Cart
+                }
+                @else {
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                Remove from Cart
+                }
+            </button>
         </div>
-        <!-- <div class="product-rating">
-            ⭐⭐⭐⭐☆ (120)
-        </div> -->
-        <button class="add-to-cart">Add to Cart</button>
+
     </div>
 </div>
+}@else {
+<h2>Loading....</h2>
+}
