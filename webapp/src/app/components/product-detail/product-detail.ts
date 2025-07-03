@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { CustomerService } from '../../services/customer';
 import { ActivatedRoute } from '@angular/router';
 import { ProductCard } from '../product-card/product-card';
+import { WishlistService } from '../../services/wishlist';
 
 @Component({
   selector: 'app-product-detail',
@@ -17,6 +18,9 @@ export class ProductDetail {
   route = inject(ActivatedRoute);
   product!: Product;
   similerProducts: Product[] = [];
+  wishlistService = inject(WishlistService);
+
+  cart = new Set<string>();
 
   constructor() {
     // const productID = this.route.snapshot.params['id'];
@@ -33,7 +37,7 @@ export class ProductDetail {
       this.customerService
         .getProducts('', this.product.categoryId, '', '', -1, 1, 4)
         .subscribe((result) => {
-          this.similerProducts = result.data.filter((x)=> x._id != id);
+          this.similerProducts = result.data.filter((x) => x._id != id);
         });
     });
   }
@@ -84,5 +88,48 @@ export class ProductDetail {
     return Math.round(
       this.product.price - (this.product.price * this.product.discount) / 100
     );
+  }
+
+  addToWishlist(event: Event, product: Product): void {
+    event.stopPropagation(); // Prevent routerLink trigger
+    // console.log('Wishlist clicked:', product.name);
+
+    if (this.isInWishlist(product)) {
+      this.wishlistService
+        .removeFromWishlists(product._id!)
+        .subscribe((result) => {
+          this.wishlistService.init();
+        });
+    } else {
+      this.wishlistService.addToWishlists(product._id!).subscribe((result) => {
+        this.wishlistService.init();
+      });
+    }
+  }
+
+  isInWishlist(product: Product): boolean {
+    let isProduct = this.wishlistService.wishlist.find(
+      (x) => x._id == product._id
+    );
+    if (isProduct) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  toggleCart(event: Event, product: any): void {
+    event.stopPropagation();
+
+    const id = product._id;
+    if (this.cart.has(id)) {
+      this.cart.delete(id);
+    } else {
+      this.cart.add(id);
+    }
+  }
+
+  isInCart(product: any): boolean {
+    return this.cart.has(product._id);
   }
 }

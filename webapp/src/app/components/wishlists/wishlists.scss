@@ -1,0 +1,14 @@
+// ===== Variables =====
+$card-bg: #ffffff;
+$card-border: #e5e7eb;
+$card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+
+// ===== Hero Card Styles =====
+.hero-card {
+  background-color: $card-bg;
+  border: 1px solid $card-border;
+  border-radius: 12px;
+  box-shadow: $card-shadow;
+  padding: 5px;
+  margin: 5px 5px;
+}

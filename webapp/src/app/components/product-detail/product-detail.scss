@@ -8,6 +8,13 @@ $card-bg: #ffffff;
 $card-border: #e5e7eb;
 $card-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
 
+:host {
+  --cart-add-bg: #007bff; /* green-600 */
+  --cart-add-hover: #0058b6; /* green-700 */
+  --cart-remove-bg: #c50303; /* red-600 */
+  --cart-remove-hover: #990505; /* red-700 */
+}
+
 // ===== Hero Card Styles =====
 .hero-card {
   background-color: $card-bg;

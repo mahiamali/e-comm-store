@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, inject, Input } from '@angular/core';
 import { Product } from '../../types/product';
 import { CurrencyPipe, NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { WishlistService } from '../../services/wishlist';
 
 @Component({
   selector: 'app-product-card',
@@ -11,8 +12,8 @@ import { RouterLink } from '@angular/router';
 })
 export class ProductCard {
   @Input() product!: Product;
+  wishlistService = inject(WishlistService);
 
-  wishlist: Set<string> = new Set();
   cart = new Set<string>();
 
   get sellingPrice() {
@@ -21,21 +22,32 @@ export class ProductCard {
     );
   }
 
-  addToWishlist(event: Event, product: any): void {
+  addToWishlist(event: Event, product: Product): void {
     event.stopPropagation(); // Prevent routerLink trigger
-    console.log('Wishlist clicked:', product.name);
-    // Integrate your service or state management here
-    const productId = product._id;
+    // console.log('Wishlist clicked:', product.name);
 
-    if (this.wishlist.has(productId)) {
-      this.wishlist.delete(productId);
+    if (this.isInWishlist(product)) {
+      this.wishlistService
+        .removeFromWishlists(product._id!)
+        .subscribe((result) => {
+          this.wishlistService.init();
+        });
     } else {
-      this.wishlist.add(productId);
+      this.wishlistService.addToWishlists(product._id!).subscribe((result) => {
+        this.wishlistService.init();
+      });
     }
   }
 
-  isInWishlist(product: any): boolean {
-    return this.wishlist.has(product._id);
+  isInWishlist(product: Product): boolean {
+    let isProduct = this.wishlistService.wishlist.find(
+      (x) => x._id == product._id
+    );
+    if (isProduct) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   toggleCart(event: Event, product: any): void {

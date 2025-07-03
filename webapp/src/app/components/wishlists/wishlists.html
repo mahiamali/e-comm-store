@@ -1,0 +1,13 @@
+<div class="w-full px-4 overflow-x-hidden">
+    <div class="hero-card">
+        <h4 class="text-2xl font-bold p-2">Wishlist Products</h4>
+        <hr>
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mt-4">
+            @for (product of wishlistService.wishlist; track $index) {
+            <app-product-card [product]="product" class="cursor-pointer"></app-product-card>
+            }@empty {
+                <h4>No Porducts in Whislist</h4>
+            }
+        </div>
+    </div>
+</div>

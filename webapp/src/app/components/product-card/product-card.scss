@@ -69,21 +69,21 @@ $font-family: "Segoe UI", sans-serif;
       margin-bottom: 1rem;
     }
 
-    .add-to-cart {
-      width: 100%;
-      background-color: $primary-color;
-      color: white;
-      border: none;
-      padding: 0.6rem;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
+    // .add-to-cart {
+    //   width: 100%;
+    //   background-color: $primary-color;
+    //   color: white;
+    //   border: none;
+    //   padding: 0.6rem;
+    //   border-radius: 8px;
+    //   font-weight: 600;
+    //   cursor: pointer;
+    //   transition: background-color 0.3s ease;
 
-      &:hover {
-        background-color: color.adjust($primary-color, $lightness: 8%);
-      }
-    }
+    //   &:hover {
+    //     background-color: color.adjust($primary-color, $lightness: 8%);
+    //   }
+    // }
   }
 
   .product-grid {

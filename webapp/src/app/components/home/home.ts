@@ -4,6 +4,7 @@ import { Product } from '../../types/product';
 import { ProductCard } from '../product-card/product-card';
 import { NgbCarouselConfig, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { RouterLink } from '@angular/router';
+import { WishlistService } from '../../services/wishlist';
 
 @Component({
   selector: 'app-home',
@@ -16,6 +17,7 @@ export class Home {
   newProducts: Product[] = [];
   featuredProducts: Product[] = [];
   bannerImages: Product[] = [];
+  wishlistService = inject(WishlistService);
 
   constructor(config: NgbCarouselConfig) {
 		// customize default values of carousels used by this component tree
@@ -35,5 +37,7 @@ export class Home {
       this.featuredProducts = result;
       this.bannerImages.push(...result);
     });
+
+    this.wishlistService.init();
   }
 }

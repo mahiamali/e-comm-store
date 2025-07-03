@@ -50,5 +50,5 @@ export class CustomerService {
 
   getProductById(id:string): Observable<Product>{
     return this.http.get<Product>(environment.apiUrl + '/customer/product/'+id);
-  }
+  }  
 }
