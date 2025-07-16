@@ -3,6 +3,7 @@ import { Product } from '../../types/product';
 import { CurrencyPipe, NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { WishlistService } from '../../services/wishlist';
+import { CartService } from '../../services/cart';
 
 @Component({
   selector: 'app-product-card',
@@ -13,8 +14,9 @@ import { WishlistService } from '../../services/wishlist';
 export class ProductCard {
   @Input() product!: Product;
   wishlistService = inject(WishlistService);
+  cartService = inject(CartService);
 
-  cart = new Set<string>();
+  // cart = new Set<string>();
 
   get sellingPrice() {
     return Math.round(
@@ -50,18 +52,30 @@ export class ProductCard {
     }
   }
 
-  toggleCart(event: Event, product: any): void {
+  addToCart(event: Event, product: any): void {
     event.stopPropagation();
 
-    const id = product._id;
-    if (this.cart.has(id)) {
-      this.cart.delete(id);
+    this.cartService.addToCarts(product._id!, 1).subscribe((result) => {
+      this.cartService.init();
+    });
+  }
+
+  isInCart(product: Product): boolean {
+    let isProduct = this.cartService.cart.find(
+      (x) => x.product._id == product._id
+    );
+    if (isProduct) {
+      return true;
     } else {
-      this.cart.add(id);
+      return false;
     }
   }
 
-  isInCart(product: any): boolean {
-    return this.cart.has(product._id);
+  removeFromCart(event: Event, product: any): void {
+    event.stopPropagation();
+
+    this.cartService.removeFromCarts(product._id!).subscribe((result) => {
+      this.cartService.init();
+    });
   }
 }

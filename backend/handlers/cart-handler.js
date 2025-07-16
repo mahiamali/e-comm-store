@@ -3,7 +3,7 @@ const Cart = require("./../db/cart");
 async function addToCart(userId, productId, quantity) {
   let product = await Cart.findOne({ userId: userId, productId: productId });
   if (product) {
-    Cart.findByIdAndUpdate(product._id,{
+    await Cart.findByIdAndUpdate(product._id,{
         quantity: product.quantity + quantity
     })
   } else {
@@ -17,14 +17,16 @@ async function addToCart(userId, productId, quantity) {
   return product.toObject();
 }
 
-async function removeFromWishlist(userId, productId) {
-  await Wishlist.deleteMany({ userId: userId, productId: productId });
+async function removeFromCart(userId, productId) {
+  await Cart.findOneAndDelete({ userId: userId, productId: productId });
   return;
 }
 
-async function getAllWishlist(userId) {
-  let wishlist = await Cart.find({ userId: userId }).populate("productId");
-  return wishlist.map((c) => c.toObject().productId);
+async function getAllCart(userId) {
+  let cart = await Cart.find({ userId: userId }).populate("productId");
+  return cart.map((c) => {
+    return {quantity: c.quantity, product: c.productId}
+  });
 }
 
-module.exports = { addToWishlist, removeFromWishlist, getAllWishlist };
+module.exports = { addToCart, removeFromCart, getAllCart };

@@ -6,6 +6,7 @@ import { CustomerService } from '../../services/customer';
 import { ActivatedRoute } from '@angular/router';
 import { ProductCard } from '../product-card/product-card';
 import { WishlistService } from '../../services/wishlist';
+import { CartService } from '../../services/cart';
 
 @Component({
   selector: 'app-product-detail',
@@ -19,8 +20,7 @@ export class ProductDetail {
   product!: Product;
   similerProducts: Product[] = [];
   wishlistService = inject(WishlistService);
-
-  cart = new Set<string>();
+  cartService = inject(CartService);
 
   constructor() {
     // const productID = this.route.snapshot.params['id'];
@@ -118,18 +118,30 @@ export class ProductDetail {
     }
   }
 
-  toggleCart(event: Event, product: any): void {
+  addToCart(event: Event, product: any): void {
     event.stopPropagation();
 
-    const id = product._id;
-    if (this.cart.has(id)) {
-      this.cart.delete(id);
+    this.cartService.addToCarts(product._id!, 1).subscribe((result) => {
+      this.cartService.init();
+    });
+  }
+
+  isInCart(product: Product): boolean {
+    let isProduct = this.cartService.cart.find(
+      (x) => x.product._id == product._id
+    );
+    if (isProduct) {
+      return true;
     } else {
-      this.cart.add(id);
+      return false;
     }
   }
 
-  isInCart(product: any): boolean {
-    return this.cart.has(product._id);
+  removeFromCart(event: Event, product: any): void {
+    event.stopPropagation();
+
+    this.cartService.removeFromCarts(product._id!).subscribe((result) => {
+      this.cartService.init();
+    });
   }
 }
