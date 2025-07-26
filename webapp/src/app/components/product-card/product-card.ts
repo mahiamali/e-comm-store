@@ -4,6 +4,7 @@ import { CurrencyPipe, NgClass } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { WishlistService } from '../../services/wishlist';
 import { CartService } from '../../services/cart';
+import { ToastService } from '../../services/toast';
 
 @Component({
   selector: 'app-product-card',
@@ -15,6 +16,7 @@ export class ProductCard {
   @Input() product!: Product;
   wishlistService = inject(WishlistService);
   cartService = inject(CartService);
+  toastService = inject(ToastService);
 
   // cart = new Set<string>();
 
@@ -34,10 +36,12 @@ export class ProductCard {
         .subscribe((result) => {
           this.wishlistService.init();
         });
+        this.toastService.showToast(`Removed from wishlist : ${product.name}`, 3000, 'error');
     } else {
       this.wishlistService.addToWishlists(product._id!).subscribe((result) => {
         this.wishlistService.init();
       });
+      this.toastService.showToast(`Added to wishlist : ${product.name}`, 3000, 'success');
     }
   }
 
@@ -58,6 +62,7 @@ export class ProductCard {
     this.cartService.addToCarts(product._id!, 1).subscribe((result) => {
       this.cartService.init();
     });
+    this.toastService.showToast(`Added to cart : ${product.name}`, 3000, 'success');
   }
 
   isInCart(product: Product): boolean {
@@ -77,5 +82,6 @@ export class ProductCard {
     this.cartService.removeFromCarts(product._id!).subscribe((result) => {
       this.cartService.init();
     });
+    this.toastService.showToast(`Removed from cart : ${product.name}`, 3000, 'error');
   }
 }

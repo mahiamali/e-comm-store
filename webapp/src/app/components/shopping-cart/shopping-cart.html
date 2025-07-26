@@ -1,1 +1,89 @@
-<p>shopping-cart works!</p>
+<section class="py-12 px-4 bg-gray-50 min-h-screen">
+    <div class="max-w-6xl mx-auto">
+        <h1 class="text-3xl font-bold text-gray-800 mb-8">Your Shopping Cart</h1>
+
+        <!-- Empty Cart Message -->
+        @if(CartItems.length === 0){
+        <div class="text-center text-gray-500 py-20">
+            <svg class="mx-auto mb-4 w-16 h-16 text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13l-2 9h14l-2-9M9 21a1 1 0 100-2 1 1 0 000 2zm6 0a1 1 0 100-2 1 1 0 000 2z" />
+            </svg>
+            <p class="text-lg">Your cart is currently empty.</p>
+            <a routerLink="" class="text-blue-600 hover:underline mt-4 block cursor-pointer">Continue Shopping</a>
+        </div>
+        }
+
+        <!-- Cart Table -->
+        @if(CartItems.length > 0){
+        <div class="overflow-x-auto">
+            <table class="w-full text-sm text-left bg-white shadow rounded-md">
+                <thead class="bg-gray-100 text-gray-700">
+                    <tr>
+                        <th class="p-4">Product</th>
+                        <th class="p-4">Price</th>
+                        <th class="p-4">Quantity</th>
+                        <th class="p-4">Subtotal</th>
+                        <th class="p-4">Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (item of CartItems; track $index) {
+                    <tr class="border-t">
+                        <td class="p-4 flex items-center gap-4">
+                            <img [src]="item.product.images[0]" alt="Product" class="w-12 h-12 object-cover rounded" />
+                            <span class="font-medium text-gray-800">{{ item.product.name }}</span>
+                        </td>
+                        <td class="p-4 text-green-700 font-semibold">
+                            <span class="text-md font-bold text-green-700">{{ sellingPrice(item.product) |
+                                currency:'INR':'symbol':'1.0-0'
+                                }}</span>
+                            <span class="ms-2 text-sm text-gray-400"><s>{{ item.product.price |
+                                    currency:'INR':'symbol':'1.0-0'
+                                    }}</s></span>
+                            <span class="ms-2 text-sm font-semibold text-green-700">{{ item.product.discount }}%
+                                off</span>
+                        </td>
+                        <td class="p-4">
+                            <div class="flex items-center gap-2">
+                                <button (click)="decreaseQuantity(item.product)" [disabled]="item.quantity === 1"
+                                    class="px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded disabled:opacity-50 disabled:cursor-not-allowed">
+                                    -
+                                </button>
+                                <span class="px-4">{{ item.quantity }}</span>
+                                <button (click)="increaseQuantity(item.product)"
+                                    class="px-2 py-1 bg-gray-200 hover:bg-gray-300 rounded">
+                                    +
+                                </button>
+                            </div>
+                        </td>
+                        <td class="p-4 text-gray-800 font-medium">
+                            {{ sellingPrice(item.product) * item.quantity | currency:'INR':'symbol' }}
+                        </td>
+                        <td class="p-4">
+                            <button (click)="removeFromCart(item.product)" class="text-red-600 hover:text-red-800">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+
+            <!-- Cart Summary -->
+            <div class="mt-8 text-right">
+                <p class="text-xl font-semibold text-gray-700">
+                    Total: {{ getTotal() | currency:'INR':'symbol' }}
+                </p>
+                <button class="mt-4 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded">
+                    Proceed to Checkout
+                </button>
+            </div>
+        </div>
+        }
+    </div>
+
+</section>

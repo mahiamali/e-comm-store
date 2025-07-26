@@ -1,10 +1,67 @@
 /* You can add global styles to this file, and also import other style files */
 @use "themes/tailwind";
-// @use 'themes/bootstrap';
-// @import "tailwindcss";
-// @import 'bootstrap/scss/bootstrap';
 @use 'bootstrap/scss/bootstrap';
 
 html, body { height: 100%; }
 
-/* Importing Bootstrap SCSS file. */
+.toast-container {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 9999;
+}
+
+.toast-message {
+  color: white;
+  padding: 12px 16px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+  min-width: 260px;
+  font-size: 14px;
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s ease;
+}
+
+.toast-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  position: relative;
+  padding-right: 16px;
+}
+
+.toast-message svg {
+  width: 20px;
+  height: 20px;
+  stroke: white;
+}
+
+/* Type Themes */
+.toast-success {
+  background-color: #16a34a; /* green-600 */
+}
+.toast-error {
+  background-color: #dc2626; /* red-600 */
+}
+.toast-warning {
+  background-color: #facc15; /* yellow-400 */
+  color: #1f2937; /* darker text for yellow bg */
+}
+
+/* Progress Bar */
+.toast-progress-bar {
+  height: 4px;
+  background-color: rgba(255,255,255,0.2);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+
+.toast-progress-fill {
+  height: 100%;
+  background-color: #ffffff;
+  transition: width 0.1s linear;
+}
+
